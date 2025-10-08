@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Resume Builder — Demo Resume</title>
+  <title>Resume Builder - New Resume</title>
 
   <style>
     :root{
@@ -86,6 +86,10 @@
       .topbar{display:none}
       body{background:transparent}
       .resume{border:1px solid #222}
+      /* આ નિયમ પ્રિન્ટ કરતી વખતે ડીલીટ બટન અને તેના કોલમને છુપાવે છે */
+      .edu-actions, .actions-header {
+        display: none;
+      }
     }
 
     /* small responsive */
@@ -125,14 +129,14 @@
         <div class="title-block">
           <h1 class="resume-title" contenteditable="true" id="resTitle">Resume</h1>
           <div class="contact" contenteditable="true" id="contactInfo">
-Vishnu B. Makwana
-Contact no.: +91 95126 58309
-Email id: makwanavishnu30897@gmail.com
+[Your Name]
+Contact: [Your Phone No.]
+Email: [Your Email ID]
           </div>
         </div>
       </header>
 
-      <!-- Demo Career Objective -->
+      <!-- Career Objective Section -->
       <section class="section" data-section-type="objective">
         <div class="section-heading" contenteditable="true">CAREER OBJECTIVE :</div>
         <div class="box" contenteditable="true" id="objective">
@@ -140,36 +144,36 @@ To work for an organization where I can utilize my knowledge and skills to achie
         </div>
       </section>
 
-      <!-- Demo Personal Profile -->
+      <!-- Personal Profile Section -->
       <section class="section" data-section-type="personal">
         <div class="section-heading" contenteditable="true">PERSONAL PROFILE :</div>
         <div class="box" style="padding-bottom:6px;">
           <div class="personal-grid">
             <div class="field-title">Full Name :</div>
-            <div contenteditable="true" id="fullName">MAKWANA VISHNUBHAI BHUPATBHAI</div>
+            <div contenteditable="true" id="fullName">[Your Full Name]</div>
 
             <div class="field-title">Date of Birth :</div>
-            <div contenteditable="true" id="dob">30/08/1997</div>
+            <div contenteditable="true" id="dob">[Date of Birth]</div>
 
             <div class="field-title">Gender :</div>
-            <div contenteditable="true" id="gender">Male</div>
+            <div contenteditable="true" id="gender">[Gender]</div>
 
             <div class="field-title">Marital Status :</div>
-            <div contenteditable="true" id="marital">Unmarried</div>
+            <div contenteditable="true" id="marital">[Marital Status]</div>
 
             <div class="field-title">Nationality :</div>
-            <div contenteditable="true" id="nationality">India</div>
+            <div contenteditable="true" id="nationality">[Nationality]</div>
 
             <div class="field-title">Language Known :</div>
-            <div contenteditable="true" id="languages">Hindi, English, Gujarati</div>
+            <div contenteditable="true" id="languages">[Languages Known]</div>
 
             <div class="field-title">Address :</div>
-            <div contenteditable="true" id="address">AT - JANSHALI, TA - LIMBDI, DIST - SURENDRANAGAR - 363425</div>
+            <div contenteditable="true" id="address">[Your Full Address]</div>
           </div>
         </div>
       </section>
 
-      <!-- Demo Educational Qualification -->
+      <!-- Educational Qualification Section -->
       <section class="section" data-section-type="education" id="educationSection">
         <div class="section-heading" contenteditable="true">EDUCATIONAL QUALIFICATION :</div>
 
@@ -181,7 +185,7 @@ To work for an organization where I can utilize my knowledge and skills to achie
               <th style="width:18%;">Board/University</th>
               <th style="width:10%;">Year</th>
               <th style="width:10%;">% / CGPA</th>
-              <th style="width:4%;"></th>
+              <th class="actions-header" style="width:4%;"></th>
             </tr>
           </thead>
           <tbody>
@@ -221,12 +225,12 @@ To work for an organization where I can utilize my knowledge and skills to achie
         </table>
       </section>
 
-      <!-- Declaration -->
+      <!-- Declaration Section -->
       <section class="section" data-section-type="declaration">
         <div class="section-heading" contenteditable="true">DECLARATION :</div>
         <div class="box declaration">
           <div contenteditable="true" id="declarationText">I hereby declare that the information furnished above is true and best of my knowledge.</div>
-          <div class="sig" style="text-align:right;margin-top:8px" contenteditable="true">Vishnu B. Makwana</div>
+          <div class="sig" style="text-align:right;margin-top:8px" contenteditable="true">[Your Name]</div>
         </div>
       </section>
 
@@ -248,7 +252,7 @@ To work for an organization where I can utilize my knowledge and skills to achie
 
     // default snapshot & storage key
     const defaultHTML = resume.innerHTML;
-    const STORAGE_KEY = 'resume_builder_demo_' + (window.location.hostname || 'local');
+    const STORAGE_KEY = 'resume_builder_template_v2';
 
     // PHOTO upload
     photoInput.addEventListener('change', (e) => {
@@ -288,29 +292,28 @@ To work for an organization where I can utilize my knowledge and skills to achie
         <td class="edu-actions"><button class="icon-btn remove-row">✕</button></td>
       `;
       eduTable.appendChild(tr);
-      tr.querySelector('.remove-row').addEventListener('click', () => {
-        tr.remove();
+      attachRemoveHandler(tr);
+    }
+
+    function attachRemoveHandler(row) {
+        row.querySelector('.remove-row').addEventListener('click', () => {
+        row.remove();
         triggerSave();
       });
     }
 
     // attach remove to initial rows
-    eduTable.querySelectorAll('.remove-row').forEach(btn => {
-      btn.addEventListener('click', () => {
-        btn.closest('tr').remove();
-        triggerSave();
-      });
-    });
+    eduTable.querySelectorAll('tr').forEach(attachRemoveHandler);
 
     // ADD CUSTOM SECTION
     addSectionBtn.addEventListener('click', () => {
       const title = prompt('Enter section title:', 'NEW SECTION');
-      if (title === null) return;
+      if (title === null || title.trim() === '') return;
       addSection({ title });
       triggerSave();
     });
 
-    function addSection({type='custom', title='New Section', content='Click here to edit...'} = {}) {
+    function addSection({type='custom', title='New Section', content='Click here to edit content...'} = {}) {
       const section = document.createElement('section');
       section.className = 'section';
       section.setAttribute('data-section-type', type);
@@ -321,12 +324,6 @@ To work for an organization where I can utilize my knowledge and skills to achie
       const decl = resume.querySelector('[data-section-type="declaration"]');
       if (decl) resume.insertBefore(section, decl);
       else resume.appendChild(section);
-      // dblclick heading to move this section down (simple reorder helper)
-      section.querySelector('.section-heading').addEventListener('dblclick', () => {
-        const next = section.nextElementSibling;
-        if (next) resume.insertBefore(next, section);
-        triggerSave();
-      });
     }
 
     // SAVE / LOAD (localStorage) with debounce
@@ -360,16 +357,15 @@ To work for an organization where I can utilize my knowledge and skills to achie
       eduTable = document.getElementById('eduTable').querySelector('tbody');
       const p = document.getElementById('photoWrap');
       if (p && !p.innerHTML.trim()) p.innerHTML = '<div class="photo-placeholder">Profile Photo</div>';
-      eduTable.querySelectorAll('.remove-row').forEach(btn => {
-        btn.addEventListener('click', () => { btn.closest('tr').remove(); triggerSave(); });
-      });
+      
+      eduTable.querySelectorAll('tr').forEach(attachRemoveHandler);
       document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable','true'));
       triggerSave();
     }
 
     // RESET to demo
     resetBtn.addEventListener('click', () => {
-      if (!confirm('Reset resume to demo default? This will clear saved changes.')) return;
+      if (!confirm('Reset resume to demo template? This will clear all your changes.')) return;
       resume.innerHTML = defaultHTML;
       localStorage.removeItem(STORAGE_KEY);
       reattachAfterLoad();
@@ -404,11 +400,7 @@ To work for an organization where I can utilize my knowledge and skills to achie
 
     // Load saved on start
     window.addEventListener('load', () => {
-      const ok = loadFromLocal();
-      if (!ok) {
-        // ensure initial handlers attached
-        eduTable.querySelectorAll('.remove-row').forEach(btn => btn.addEventListener('click', () => { btn.closest('tr').remove(); triggerSave(); }));
-      }
+        loadFromLocal();
     });
   </script>
 </body>
