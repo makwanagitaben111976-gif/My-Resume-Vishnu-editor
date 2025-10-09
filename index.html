@@ -1,240 +1,346 @@
-<!doctype html>
-<html lang="gu">
+<!DOCTYPE html>
+<html lang="gu" dir="ltr">
 
-  <head>
-
-  
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title> Vishnu Resume Builder - New Resume</title>
-
+<head>
+  <meta charset="UTF-8">
+  <title>Resume Builder - Centered Title</title>
   <style>
-    :root{
+    :root {
       --page-width: 210mm;
       --page-height: 297mm;
-      --page-padding-top: 18mm;
-      --page-padding-horizontal: 16mm;
-      --inner-header-gap: 8mm;
-      --border-color: #222;
-      --heading-font: "Times New Roman", Georgia, serif;
-      --body-font: "Arial", Helvetica, sans-serif;
-      --muted: #666;
+      --margin: 20mm;
+      --font-main: 'Calibri', 'Segoe UI', sans-serif;
+      --font-heading: 'Georgia', serif;
+      --border-color: #d2a679;
+      --text-color: #333;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;background:#f1f1f1;font-family:var(--body-font);-webkit-font-smoothing:antialiased}
-    .topbar{display:flex;gap:8px;align-items:center;padding:10px;background:#fff;border-bottom:1px solid #ddd;flex-wrap:wrap;}
-    .btn{background:#1f6feb;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:600}
-    .btn.secondary{background:#666}
-    .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-    .flex-right{margin-left:auto;color:#444;font-size:13px}
-    input[type=file]{display:none}
-    .preview-wrap{display:flex;justify-content:center;padding:20px}
-
-    .resume{
-      width:var(--page-width);
-      min-height:var(--page-height);
-      background:#fff;
-      padding: var(--page-padding-top) var(--page-padding-horizontal) 18mm var(--page-padding-horizontal);
-      border:3px solid var(--border-color);
-      position:relative;
-      color:#111;
-      line-height:1.35;
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
 
-    .header{
-      display:flex;
-      gap:18px;
-      align-items:flex-start;
-      margin-top: calc(var(--inner-header-gap) * -1);
-      padding-top: 6px;
-      margin-bottom:10px;
+    html,
+    body {
+      background: #e9e9e9;
+      font-family: var(--font-main);
+      -webkit-font-smoothing: antialiased;
     }
 
-    .photo-wrap{
-      width:120px;
-      min-width:120px;
-      height:130px;
-      border:1.6px solid #444;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      overflow:hidden;
-      background:#fff;
-      padding:6px;
+    .topbar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      padding: 10px 20px;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      flex-wrap: wrap;
     }
-    .photo-wrap img{width:100%;height:100%;object-fit:cover;display:block}
-    .photo-placeholder{font-size:12px;color:var(--muted);text-align:center}
 
-    .title-block{flex:1;text-align:center;position:relative;padding-top:6px}
-    .resume-title{font-family:var(--heading-font);font-size:30px;font-style:italic;text-decoration:underline;margin:0 0 6px 0}
-    .contact{position:absolute;right:0;top:0;text-align:right;font-style:italic;font-family:var(--heading-font);font-size:14px;white-space:pre-line;transform: translateY(6px);}
+    .btn {
+      background: #0078d4;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+    }
 
-    .section{margin-top:12px;border-top:1px solid #666;padding-top:10px;position:relative}
-    .section-heading{font-weight:700;font-family:var(--heading-font);font-size:16px;margin-bottom:8px;display:inline-block}
-    .box{border:1px solid #666;padding:10px;margin:8px 0}
-    .muted{color:var(--muted);font-style:italic}
+    .btn.secondary {
+      background: #666;
+    }
 
-    .personal-grid{display:grid;grid-template-columns:1fr 2fr;gap:8px 18px;align-items:start;margin-top:6px}
-    .field-title{font-weight:700;letter-spacing:0.6px;text-transform:uppercase}
+    .ad-banner {
+      background: #fff8c4;
+      text-align: center;
+      padding: 10px;
+      font-size: 14px;
+      border-bottom: 1px solid #ddd;
+    }
 
-    .edu-table{width:100%;border-collapse:collapse;margin-top:8px;font-size:13px}
-    .edu-table th,.edu-table td{padding:8px;border:1px solid #ddd;vertical-align:top}
-    .edu-actions{display:flex;gap:6px;align-items:center}
+    .ad-banner a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
 
-    .inline-input{border:1px dashed #ccc;padding:4px 6px;border-radius:4px}
-    .icon-btn{background:#f3f3f3;border:1px solid #ddd;padding:4px 6px;border-radius:4px;cursor:pointer}
+    .page-container {
+      padding: 30px 0;
+      display: flex;
+      justify-content: center;
+    }
 
-    @media print{
-      .topbar{display:none}
-      body{background:transparent}
-      .resume{border:1px solid #222}
-      /* આ નિયમ પ્રિન્ટ કરતી વખતે ડીલીટ બટન અને તેના કોલમને છુપાવે છે */
-      .edu-actions, .actions-header {
+    .resume {
+      background: #fff;
+      width: var(--page-width);
+      min-height: var(--page-height);
+      padding: var(--margin);
+      border: 2px solid var(--border-color);
+      color: var(--text-color);
+      font-size: 11pt;
+      line-height: 1.5;
+    }
+
+    /* --- New Styles for Centered Title --- */
+    .main-title-header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .main-title {
+      font-family: var(--font-main);
+      font-weight: 600;
+      letter-spacing: 4px;
+      font-size: 20pt;
+    }
+    /* ------------------------------------- */
+
+    .resume-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .photo-wrap {
+      width: 125px;
+      min-width: 125px;
+      height: 145px;
+      border: 1px solid #ccc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      background: #f7f7f7;
+    }
+
+    .photo-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .photo-placeholder {
+      font-size: 12px;
+      color: #888;
+      text-align: center;
+      padding: 10px;
+    }
+
+    .header-main {
+      flex-grow: 1;
+      text-align: right;
+    }
+    
+    .contact-info div {
+        margin-bottom: 4px;
+    }
+
+    .section {
+      margin-bottom: 20px;
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: 14pt;
+      font-weight: bold;
+      border: 1px solid var(--text-color);
+      border-left: 5px solid var(--text-color);
+      padding: 4px 10px;
+      margin-bottom: 12px;
+      display: inline-block;
+    }
+
+    .section-content {
+      padding-left: 5px;
+    }
+
+    .personal-profile .profile-grid {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      row-gap: 8px;
+    }
+
+    .personal-profile .field-label {
+      font-weight: bold;
+    }
+
+    .edu-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 8px;
+      font-size: 11pt;
+    }
+
+    .edu-table th,
+    .edu-table td {
+      border: 1px solid #888;
+      padding: 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+    
+    .edu-table th {
+        background-color: #f2f2f2;
+    }
+
+    .declaration-content {
+        margin-top: 10px;
+    }
+    
+    .signature {
+        margin-top: 40px;
+        text-align: right;
+    }
+
+    [contenteditable="true"] {
+      padding: 2px 4px;
+      border: 1px dashed transparent;
+    }
+
+    [contenteditable="true"]:hover {
+      border: 1px dashed #ccc;
+      background-color: #f7f7f7;
+    }
+    
+    @media print {
+      body, .page-container {
+        background: transparent;
+        padding: 0;
+      }
+      .topbar, .ad-banner {
         display: none;
+      }
+      .resume {
+        border: 2px solid var(--border-color);
+        margin: 0;
+        box-shadow: none;
+        page-break-after: always;
+      }
+      [contenteditable="true"]:hover {
+          border: 1px dashed transparent;
+          background-color: transparent;
       }
     }
 
-    /* small responsive */
-    @media (max-width:900px){
-      .resume{width:100%;padding:12px}
-      .photo-wrap{width:90px;height:100px}
-    }
   </style>
 </head>
+
 <body>
 
   <div class="topbar">
-    <div class="controls">
-      <label class="btn" for="photoInput">Upload Photo</label>
-      <input id="photoInput" type="file" accept="image/*">
-
-      <div style="display:flex;gap:6px;align-items:center">
-        <button id="addEdu" class="btn">Add Education Row</button>
-        <button id="addSectionBtn" class="btn">Add Section</button>
-        <button id="printBtn" class="btn secondary">Print / Save as PDF</button>
-        <button id="saveBtn" class="btn secondary">Save</button>
-        <button id="loadBtn" class="btn secondary">Load</button>
-        <button id="resetBtn" class="btn secondary">Reset</button>
-      </div>
-    </div>
-
-    <div class="flex-right">સૂચન: ટેક્સ્ટ પર ક્લિક કરીને સીધા બદલો. ફોટો અપલોડ કરો અને પછી Print→Save as PDF ઉપયોગ કરો.</div>
+    <label class="btn" for="photoInput">Upload Photo</label>
+    <input id="photoInput" type="file" accept="image/*" style="display:none;">
+    <button id="addEdu" class="btn">Add Education Row</button>
+    <button id="removeEdu" class="btn secondary">Remove Last Row</button>
+    <button id="addSectionBtn" class="btn">Add Section</button>
+    <button id="printBtn" class="btn">Print / Save PDF</button>
+  </div>
+  
+  <div class="ad-banner">
+    <a href="#" target="_blank">Your Advertisement Banner Here!</a>
   </div>
 
-  <div class="preview-wrap">
-    <article id="resume" class="resume" lang="en">
-      <header class="header" data-section-type="header">
-        <div class="photo-wrap" id="photoWrap" title="Upload photo from toolbar">
-          <div class="photo-placeholder">Profile Photo</div>
-        </div>
+  <div class="page-container">
+    <article id="resume" class="resume">
+      
+      <!-- 'RESUME' Title Section -->
+      <div class="main-title-header">
+        <div class="main-title" contenteditable="true">RESUME</div>
+      </div>
 
-        <div class="title-block">
-          <h1 class="resume-title" contenteditable="true" id="resTitle">Resume</h1>
-          <div class="contact" contenteditable="true" id="contactInfo">
-[Your Name]
-Contact: [Your Phone No.]
-Email: [Your Email ID]
-          </div>
+      <!-- Photo and Contact Info Section -->
+      <header class="resume-header">
+        <div class="photo-wrap" id="photoWrap">
+            <div class="photo-placeholder">Upload Your Photo Here</div>
+        </div>
+        <div class="header-main">
+            <div class="contact-info">
+              <div contenteditable="true" class="contact-name"><b>Rajesh Kumar Sharma</b></div>
+              <div contenteditable="true">Contact no. - +91 98765 43210</div>
+              <div contenteditable="true">Email id. - rajesh.sharma@email.com</div>
+            </div>
         </div>
       </header>
 
-      <!-- Career Objective Section -->
-      <section class="section" data-section-type="objective">
-        <div class="section-heading" contenteditable="true">CAREER OBJECTIVE :</div>
-        <div class="box" contenteditable="true" id="objective">
-To work for an organization where I can utilize my Knowledgeand skill with Maximum
-Potential an to contribute for the excellence and growth to the organization. 
+      <section class="section">
+        <div class="section-title" contenteditable="true">Career Objective</div>
+        <div class="section-content" contenteditable="true">
+          To work for an organization where I can utilize my Knowledge and skill with Maximum Potential and to contribute for the excellence and growth to the organization.
         </div>
       </section>
 
-      <!-- Personal Profile Section -->
-      <section class="section" data-section-type="personal">
-        <div class="section-heading" contenteditable="true">PERSONAL PROFILE :</div>
-        <div class="box" style="padding-bottom:6px;">
-          <div class="personal-grid">
-            <div class="field-title">Full Name :</div>
-            <div contenteditable="true" id="fullName">[Your Full Name]</div>
+      <section class="section personal-profile">
+        <div class="section-title" contenteditable="true">Personal Profile</div>
+        <div class="section-content">
+          <div class="profile-grid">
+            <span class="field-label">Full Name</span>
+            <span contenteditable="true">: Rajesh Kumar Sharma</span>
 
-            <div class="field-title">Date of Birth :</div>
-            <div contenteditable="true" id="dob">[Date of Birth]</div>
+            <span class="field-label">Date of Birth</span>
+            <span contenteditable="true">: 15/05/1995</span>
+            
+            <span class="field-label">Gender</span>
+            <span contenteditable="true">: Male</span>
 
-            <div class="field-title">Gender :</div>
-            <div contenteditable="true" id="gender">[Gender]</div>
+            <span class="field-label">Marital Status</span>
+            <span contenteditable="true">: Single</span>
 
-            <div class="field-title">Marital Status :</div>
-            <div contenteditable="true" id="marital">[Marital Status]</div>
+            <span class="field-label">Nationality</span>
+            <span contenteditable="true">: Indian</span>
 
-            <div class="field-title">Nationality :</div>
-            <div contenteditable="true" id="nationality">[Nationality]</div>
+            <span class="field-label">Languages Known</span>
+            <span contenteditable="true">: English, Hindi</span>
 
-            <div class="field-title">Language Known :</div>
-            <div contenteditable="true" id="languages">[Languages Known]</div>
-
-            <div class="field-title">Address :</div>
-            <div contenteditable="true" id="address">[Your Full Address]</div>
+            <span class="field-label">Address</span>
+            <span contenteditable="true">: 123, ABC Society, Near XYZ Circle, Ahmedabad, Gujarat - 380001</span>
           </div>
         </div>
       </section>
 
-      <!-- Educational Qualification Section -->
-      <section class="section" data-section-type="education" id="educationSection">
-        <div class="section-heading" contenteditable="true">EDUCATIONAL QUALIFICATION :</div>
-
+      <section class="section" id="educationSection">
+        <div class="section-title" contenteditable="true">Educational Qualification</div>
         <table class="edu-table" id="eduTable">
           <thead>
             <tr>
-              <th style="width:16%;">Degree</th>
-              <th style="width:44%;">School/College</th>
-              <th style="width:18%;">Board/University</th>
-              <th style="width:10%;">Year</th>
-              <th style="width:10%;">% / CGPA</th>
-              <th class="actions-header" style="width:4%;"></th>
+              <th>Degree</th>
+              <th>School/College</th>
+              <th>Board/University</th>
+              <th>Year</th>
+              <th>% / CGPA</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td contenteditable="true">SSC</td>
-              <td contenteditable="true">Shree Devanand Swami Vidhyalay, Balol</td>
+              <td contenteditable="true">Bachelor of Commerce (B.Com)</td>
+              <td contenteditable="true">City Commerce College, Ahmedabad</td>
+              <td contenteditable="true">Gujarat University</td>
+              <td contenteditable="true">2016</td>
+              <td contenteditable="true">75.50</td>
+            </tr>
+             <tr>
+              <td contenteditable="true">H.S.C (Commerce)</td>
+              <td contenteditable="true">New Era High School, Ahmedabad</td>
               <td contenteditable="true">GSEB</td>
               <td contenteditable="true">2013</td>
-              <td contenteditable="true">61.83</td>
-              <td class="edu-actions"><button class="icon-btn remove-row">✕</button></td>
-            </tr>
-            <tr>
-              <td contenteditable="true">HSC</td>
-              <td contenteditable="true">Sir J. High School, Limbdi</td>
-              <td contenteditable="true">GHSEB</td>
-              <td contenteditable="true">2017</td>
-              <td contenteditable="true">48</td>
-              <td class="edu-actions"><button class="icon-btn remove-row">✕</button></td>
-            </tr>
-            <tr>
-              <td contenteditable="true">Graduation (B.A.)</td>
-              <td contenteditable="true">Saurashtra University, Rajkot</td>
-              <td contenteditable="true">Saurashtra University</td>
-              <td contenteditable="true">2021</td>
-              <td contenteditable="true">49</td>
-              <td class="edu-actions"><button class="icon-btn remove-row">✕</button></td>
-            </tr>
-            <tr>
-              <td contenteditable="true">Sub Fireman Officer (ITI)</td>
-              <td contenteditable="true">ITI Kummar</td>
-              <td contenteditable="true">GCVT</td>
-              <td contenteditable="true">2023</td>
-              <td contenteditable="true">73</td>
-              <td class="edu-actions"><button class="icon-btn remove-row">✕</button></td>
+              <td contenteditable="true">82.00</td>
             </tr>
           </tbody>
         </table>
       </section>
 
-      <!-- Declaration Section -->
-      <section class="section" data-section-type="declaration">
-        <div class="section-heading" contenteditable="true">DECLARATION :</div>
-        <div class="box declaration">
-          <div contenteditable="true" id="declarationText">I hereby declare that the information furnished above is true and best of my knowledge.</div>
-          <div class="sig" style="text-align:right;margin-top:8px" contenteditable="true">[Your Name]</div>
+      <section class="section declaration">
+        <div class="section-title" contenteditable="true">Declaration</div>
+        <div class="section-content declaration-content" contenteditable="true">
+          I hereby declare that the information furnished above is true and best of my knowledge.
+        </div>
+        <div class="signature" contenteditable="true">
+          Rajesh Kumar Sharma
         </div>
       </section>
 
@@ -242,31 +348,19 @@ Potential an to contribute for the excellence and growth to the organization.
   </div>
 
   <script>
-    // Elements
+    // --- All Element Selections ---
+    const printBtn = document.getElementById('printBtn');
     const photoInput = document.getElementById('photoInput');
     const photoWrap = document.getElementById('photoWrap');
-    const resume = document.getElementById('resume');
-    const printBtn = document.getElementById('printBtn');
-    const resetBtn = document.getElementById('resetBtn');
-    const saveBtn = document.getElementById('saveBtn');
-    const loadBtn = document.getElementById('loadBtn');
     const addEduBtn = document.getElementById('addEdu');
-    let eduTable = document.getElementById('eduTable').querySelector('tbody');
+    const removeEduBtn = document.getElementById('removeEdu');
     const addSectionBtn = document.getElementById('addSectionBtn');
+    const resume = document.getElementById('resume');
 
-    // default snapshot & storage key
-    const defaultHTML = resume.innerHTML;
-    const STORAGE_KEY = 'resume_builder_template_v2';
-
-    // PHOTO upload
+    // --- Event Listener for Photo Upload ---
     photoInput.addEventListener('change', (e) => {
       const file = e.target.files && e.target.files[0];
       if (!file) return;
-      const allowed = ['image/png','image/jpeg','image/jpg','image/webp'];
-      if (!allowed.includes(file.type)) {
-        alert('Please select an image (jpg/png/webp).');
-        return;
-      }
       const reader = new FileReader();
       reader.onload = () => {
         photoWrap.innerHTML = '';
@@ -274,137 +368,66 @@ Potential an to contribute for the excellence and growth to the organization.
         img.src = reader.result;
         img.alt = 'Profile Photo';
         photoWrap.appendChild(img);
-        triggerSave();
       };
       reader.readAsDataURL(file);
     });
 
-    // EDUCATION add/remove
+    // --- Event Listener for Adding Education Row ---
     addEduBtn.addEventListener('click', () => {
-      addEducationRow();
-      triggerSave();
-    });
-
-    function addEducationRow(data = {degree:'',school:'',board:'',year:'',percent:''}) {
+      const eduTableBody = document.getElementById('eduTable').querySelector('tbody');
+      if (!eduTableBody) return;
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td contenteditable="true">${escapeHtml(data.degree)}</td>
-        <td contenteditable="true">${escapeHtml(data.school)}</td>
-        <td contenteditable="true">${escapeHtml(data.board)}</td>
-        <td contenteditable="true">${escapeHtml(data.year)}</td>
-        <td contenteditable="true">${escapeHtml(data.percent)}</td>
-        <td class="edu-actions"><button class="icon-btn remove-row">✕</button></td>
+        <td contenteditable="true">Degree</td>
+        <td contenteditable="true">School/College Name</td>
+        <td contenteditable="true">Board/University</td>
+        <td contenteditable="true">Year</td>
+        <td contenteditable="true">% / CGPA</td>
       `;
-      eduTable.appendChild(tr);
-      attachRemoveHandler(tr);
-    }
+      eduTableBody.appendChild(tr);
+    });
 
-    function attachRemoveHandler(row) {
-        row.querySelector('.remove-row').addEventListener('click', () => {
-        row.remove();
-        triggerSave();
-      });
-    }
+    // --- Event Listener for Removing Last Education Row ---
+    removeEduBtn.addEventListener('click', () => {
+        const eduTableBody = document.getElementById('eduTable').querySelector('tbody');
+        if (eduTableBody && eduTableBody.rows.length > 1) {
+            eduTableBody.deleteRow(-1);
+        } else {
+            alert("Cannot remove the last row.");
+        }
+    });
 
-    // attach remove to initial rows
-    eduTable.querySelectorAll('tr').forEach(attachRemoveHandler);
-
-    // ADD CUSTOM SECTION
+    // --- Event Listener for Adding a New Section ---
     addSectionBtn.addEventListener('click', () => {
-      const title = prompt('Enter section title:', 'NEW SECTION');
-      if (title === null || title.trim() === '') return;
-      addSection({ title });
-      triggerSave();
-    });
+      const title = prompt('Enter new section title:', 'Work Experience');
+      if (!title) return;
 
-    function addSection({type='custom', title='New Section', content='Click here to edit content...'} = {}) {
-      const section = document.createElement('section');
-      section.className = 'section';
-      section.setAttribute('data-section-type', type);
-      section.innerHTML = `
-        <div class="section-heading" contenteditable="true">${escapeHtml(title)}</div>
-        <div class="box" contenteditable="true">${escapeHtml(content)}</div>
+      const newSection = document.createElement('section');
+      newSection.className = 'section';
+      newSection.innerHTML = `
+        <div class="section-title" contenteditable="true">${title}</div>
+        <div class="section-content" contenteditable="true">
+          Enter details here...
+        </div>
       `;
-      const decl = resume.querySelector('[data-section-type="declaration"]');
-      if (decl) resume.insertBefore(section, decl);
-      else resume.appendChild(section);
-    }
-
-    // SAVE / LOAD (localStorage) with debounce
-    let saveTimer = null;
-    function triggerSave() {
-      clearTimeout(saveTimer);
-      saveTimer = setTimeout(saveToLocal, 700);
-    }
-    function saveToLocal() {
-      try {
-        const data = { html: resume.innerHTML };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      } catch (err) { console.error('Save failed', err); }
-    }
-    function loadFromLocal(force=false) {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (!raw) { if (force) alert('No saved resume found.'); return false; }
-        const data = JSON.parse(raw);
-        if (!data || !data.html) return false;
-        resume.innerHTML = data.html;
-        reattachAfterLoad();
-        return true;
-      } catch (err) { console.error('Load failed', err); return false; }
-    }
-    saveBtn.addEventListener('click', () => { saveToLocal(); alert('Saved in browser localStorage.'); });
-    loadBtn.addEventListener('click', () => { if (loadFromLocal(true)) alert('Loaded saved resume.'); });
-
-    function reattachAfterLoad() {
-      // reassign references and reattach handlers
-      eduTable = document.getElementById('eduTable').querySelector('tbody');
-      const p = document.getElementById('photoWrap');
-      if (p && !p.innerHTML.trim()) p.innerHTML = '<div class="photo-placeholder">Profile Photo</div>';
       
-      eduTable.querySelectorAll('tr').forEach(attachRemoveHandler);
-      document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable','true'));
-      triggerSave();
-    }
-
-    // RESET to demo
-    resetBtn.addEventListener('click', () => {
-      if (!confirm('Reset resume to demo template? This will clear all your changes.')) return;
-      resume.innerHTML = defaultHTML;
-      localStorage.removeItem(STORAGE_KEY);
-      reattachAfterLoad();
+      const declarationSection = resume.querySelector('.declaration');
+      if (declarationSection) {
+        declarationSection.parentNode.insertBefore(newSection, declarationSection);
+      } else {
+        resume.appendChild(newSection);
+      }
     });
 
-    // PRINT -> user can Save as PDF
+    // --- Event Listener for Printing / Saving PDF ---
     printBtn.addEventListener('click', () => {
-      const toRestore = [];
-      resume.querySelectorAll('[contenteditable]').forEach(el => {
-        toRestore.push({el, attr: el.getAttribute('contenteditable')});
-        el.removeAttribute('contenteditable');
-      });
+      const editableElements = resume.querySelectorAll('[contenteditable="true"]');
+      editableElements.forEach(el => el.removeAttribute('contenteditable'));
+      
       setTimeout(() => {
         window.print();
-        toRestore.forEach(o => { if (o.attr !== null) o.el.setAttribute('contenteditable', o.attr); });
+        editableElements.forEach(el => el.setAttribute('contenteditable', 'true'));
       }, 200);
-    });
-
-    // Autosave on edits
-    resume.addEventListener('input', () => triggerSave());
-    resume.addEventListener('blur', () => triggerSave(), true);
-
-    // Prevent accidental drag/drop
-    window.addEventListener('dragover', e => e.preventDefault());
-    window.addEventListener('drop', e => e.preventDefault());
-
-    // Helper: escape HTML
-    function escapeHtml(str) {
-      if (str === null || str === undefined) return '';
-      return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
-    }
-
-    // Load saved on start
-    window.addEventListener('load', () => {
-        loadFromLocal();
     });
   </script>
 
